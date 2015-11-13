@@ -2,8 +2,7 @@
 
 from django.core.management.base import BaseCommand, CommandError
 
-from ...models import get_indexer
-from ... import conf as c
+from ...index import get_indexer
 
 
 class Command(BaseCommand):
