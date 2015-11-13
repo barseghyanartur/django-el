@@ -30,7 +30,8 @@ def create_connections():
         for param_name, param_value in params.items():
 
             if param_name == 'serializer' and isinstance(param_value, str):
-                param_value = import_string(param_value)
+                serializer_class = import_string(param_value)
+                param_value = serializer_class()
 
             processed_params[param_name] = param_value
 
