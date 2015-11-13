@@ -5,14 +5,7 @@ build
 
 *.log
 *.pid
-
-/sampleproject/bin
-/sampleproject/lib
-/sampleproject/share
-/sampleproject/env
-/sampleproject/*.sqlite3
-
-/docs/build
+.idea
 
 .tox
 .coverage
