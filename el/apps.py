@@ -3,7 +3,7 @@
 from django.apps import AppConfig
 
 from .signals import register_signal_handlers
-
+from .conf import create_connections
 
 
 class DefaultConfig(AppConfig):
@@ -13,6 +13,5 @@ class DefaultConfig(AppConfig):
     def ready(self):
         # импортировать сигналы для их регистрации
         import el.signals
-        from el.conf import create_connection
-        create_connection()
+        create_connections()
         register_signal_handlers()
