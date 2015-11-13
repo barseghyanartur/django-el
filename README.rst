@@ -10,6 +10,9 @@ It is built on top of ``elasticsearch-dsl``.
 
 Project aims to support Python 3 and Django 1.8 (at least).
 
+The library is in development, use it carefully, because until stable an API
+is a subject to change.
+
 
 Quickstart
 ----------
@@ -33,6 +36,9 @@ Configure your models to be indexable::
         return mapping
 
 
+From this moment, the ``Article`` model will be autodiscovered and indexed.
+
+
 Update search indexes::
 
     ./manage.py update_index
@@ -41,14 +47,41 @@ Update search indexes::
 Use ``elasticsearch_dsl`` to query::
 
     # articles is a list of an Article instances
-    articles = Article.search().query('match', title="Bob's article").execute()
+    articles = Article.search().query('match', title="Bob's article").execute() 
 
 
+In contrast with ``elasticsearch_dsl``, ``django-el`` provides modified
+``Search`` object which return django model instances instead of raw
+elasticsearch results.
 
-Documentation
+
+Installation
+------------
+
+Install ``django-el`` as usual python package using pip::
+
+    pip install django-el
+
+
+Configuration
 -------------
-The library is in development, use it carefully, because until stable an API
-is a subject to change.
+
+Django-el is build on top of ``elasticsearch_dsl`` library and provides
+django-way connections configuration through ``settings.py``::
+
+    ELASTICSEARCH_CONNECTIONS = {
+        'default': {
+            'hosts': ['127.0.0.1:9200'],
+            'serializer': 'project.serializers.MySerializer',
+        }
+    }
+
+You can define project connections using ``ELASTICSEARCH_CONNECTIONS``
+setting. It is just a hight-level interface over low-level
+``elasticsearch_dsl.connections.connections.create_connection`` function.
+
+The keys are (default, in this example) are connection aliases, and it's values
+are ``create_connection`` arguments.
 
 
 .. |pypi| image:: https://img.shields.io/pypi/v/django-el.svg?style=flat-square

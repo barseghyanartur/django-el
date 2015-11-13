@@ -2,7 +2,7 @@
 
 from django.db.models import signals
 
-from . import models as m
+from . import index
 
 
 def get_indexed_instance(instance):
@@ -22,17 +22,17 @@ def post_save_signal_handler(instance, **kwargs):
     indexed_instance = get_indexed_instance(instance)
 
     if indexed_instance:
-        m.get_indexer().add_document(indexed_instance)
+        index.get_indexer().add_document(indexed_instance)
 
 
 def post_delete_signal_handler(instance, **kwargs):
     indexed_instance = get_indexed_instance(instance)
 
     if indexed_instance:
-        m.get_indexer().delete_document(indexed_instance)
+        index.get_indexer().delete_document(indexed_instance)
 
 
 def register_signal_handlers():
-    for model in m.get_indexed_models():
+    for model in index.get_indexed_models():
         signals.post_save.connect(post_save_signal_handler, sender=model)
         signals.post_delete.connect(post_delete_signal_handler, sender=model)
