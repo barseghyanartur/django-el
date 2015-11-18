@@ -47,12 +47,16 @@ Update search indexes::
 Use ``elasticsearch_dsl`` to query::
 
     # articles is a list of an Article instances
-    articles = Article.search().query('match', title="Bob's article").execute() 
+    articles = Article.search().query('match', title="Bob's article").execute()
+
+    # articles is a list of elasticsearch_dsl hits
+    articles = Article.search().query('match', title="Bob's article").execute(cast=False)
 
 
 In contrast with ``elasticsearch_dsl``, ``django-el`` provides modified
 ``Search`` object which return django model instances instead of raw
-elasticsearch results.
+elasticsearch results by default. You can control this feature using the
+``cast`` argument.
 
 
 Installation
