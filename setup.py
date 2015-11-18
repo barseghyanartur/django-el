@@ -40,7 +40,7 @@ class Tox(TestCommand):
 
 setup(
     name="django-el",
-    version="0.2",
+    version="0.2.2",
     packages=find_packages(),
     author="asyncee",
     description="Django elasticsearch integration.",
