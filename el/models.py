@@ -17,8 +17,11 @@ class DjangoObjectsSearch(Search):
         s.model_class = self.model_class
         return s
 
-    def execute(self, *args, **kwargs):
+    def execute(self, cast=True, *args, **kwargs):
         hits = super().execute(*args, **kwargs)
+
+        if not cast:
+            return hits
 
         # Get pks from results
         pks = [str(hit.pk) for hit in hits]
