@@ -42,6 +42,9 @@ setup(
     name="django-el",
     version="0.2.2",
     packages=find_packages(),
+    install_requires=[
+        "elasticsearch_dsl",
+    ],
     author="asyncee",
     description="Django elasticsearch integration.",
     long_description=long_description,
