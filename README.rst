@@ -8,10 +8,36 @@ It is built on top of ``elasticsearch-dsl``.
 ---------------
 
 
+Overview
+--------
+
 Project aims to support Python 3 and Django 1.8 (at least).
 
 The library is in development, use it carefully, because until stable an API
 is a subject to change.
+
+The library supports indexing multiple models with ``el.models.Indexed`` mixin.
+Such models are autodiscovered and indexed automatically with an
+``update_index`` command.
+
+Currently you can query only one type of models, only Article, or BlogPost,
+for example.
+The library is just just a thin integration layer of ``elasticsearch-dsl`` and
+``django``, because former comes with other persisting layer (a ``DocType`` one).
+
+If you want to query multiple models at once, you can use raw ``elasticsearch-dsl``
+query and then cast documents to models using elasticsearch document meta
+information (model content_type and pk).
+
+The library was written as an experiment, inspired by ``django-wagtail``,
+so it provides just a basic functionality.
+
+If you feel happy with ``elasticsearch-dsl``, this library *might*
+suit your needs. If you are not, then maybe it is better idea to use
+``django-haystack`` + ``elasticstack``.
+
+
+Feel free to contribute and improve, if you feel you need it :)
 
 
 Quickstart
@@ -25,15 +51,15 @@ Configure your models to be indexable::
     class Article(models.Model, Indexed):
         title = models.CharField(max_length=78)
 
-    @classmethod
-    def get_indexable(cls):
-        return cls.objects.all()
+        @classmethod
+        def get_indexable(cls):
+            return cls.objects.all()
 
-    @classmethod
-    def configure_mapping(cls, mapping):
-        # mapping is an elasticsearch_dsl Mapping object
-        mapping.field('title', 'string')
-        return mapping
+        @classmethod
+        def configure_mapping(cls, mapping):
+            # mapping is an elasticsearch_dsl Mapping object
+            mapping.field('title', 'string')
+            return mapping
 
 
 From this moment, the ``Article`` model will be autodiscovered and indexed.
