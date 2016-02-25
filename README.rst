@@ -43,7 +43,9 @@ Feel free to contribute and improve, if you feel you need it :)
 Quickstart
 ----------
 
-Configure your models to be indexable::
+Configure your models to be indexable:
+
+.. code-block :: python
 
     from django.db import models
     from el.models import Indexed
@@ -70,7 +72,9 @@ Update search indexes::
     ./manage.py update_index
 
 
-Use ``elasticsearch_dsl`` to query::
+Use ``elasticsearch_dsl`` to query:
+
+.. code-block :: python
 
     # articles is a list of an Article instances
     articles = Article.search().query('match', title="Bob's article").execute()
@@ -97,7 +101,9 @@ Configuration
 -------------
 
 Django-el is build on top of ``elasticsearch_dsl`` library and provides
-django-way connections configuration through ``settings.py``::
+django-way connections configuration through ``settings.py``:
+
+.. code-block :: python
 
     ELASTICSEARCH_CONNECTIONS = {
         'default': {
